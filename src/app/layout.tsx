@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ThemeRegistry from "@/theme/ThemeRegistry";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MZ Studios - Web Application",
+  title: "MZ Studios - Stonowany Motyw UI",
   description: "MZ Studios Web Application with Material-UI Dark Theme",
 };
 
@@ -25,13 +27,23 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pl"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <ThemeRegistry>{children}</ThemeRegistry>
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col"
+        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+      >
+        <ThemeRegistry>
+          <Navbar />
+          <main style={{ flex: 1 }}>
+            {children}
+          </main>
+          <Footer />
+        </ThemeRegistry>
       </body>
     </html>
   );
 }
-
