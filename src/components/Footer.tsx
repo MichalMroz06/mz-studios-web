@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   Box,
   Container,
@@ -30,6 +31,28 @@ function ItchIoIcon(props: React.ComponentProps<typeof SvgIcon>) {
   );
 }
 
+interface FooterLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+const GAMES_LINKS: FooterLink[] = [
+  { label: 'Grand Strife Civil War', href: '/games' },
+  { label: 'Strona na itch.io', href: 'https://itch.io', external: true },
+];
+
+const STUDIO_LINKS: FooterLink[] = [
+  { label: 'O Nas', href: '/about' },
+  { label: 'Kontakt', href: '/contact' },
+];
+
+const SOCIAL_LINKS = [
+  { title: 'GitHub', icon: <GitHubIcon fontSize="small" />, href: 'https://github.com' },
+  { title: 'YouTube', icon: <YouTubeIcon fontSize="small" />, href: 'https://youtube.com' },
+  { title: 'itch.io', icon: <ItchIoIcon fontSize="small" />, href: 'https://itch.io' },
+];
+
 export default function Footer() {
   return (
     <Box
@@ -46,7 +69,14 @@ export default function Footer() {
         <Grid container spacing={4} sx={{ mb: 4 }}>
           {/* Brand Column */}
           <Grid item xs={12} md={4}>
-            <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 2 }}>
+            <Stack
+              component={Link}
+              href="/"
+              direction="row"
+              spacing={1.5}
+              alignItems="center"
+              sx={{ mb: 2, textDecoration: 'none', color: 'inherit', display: 'inline-flex' }}
+            >
               <Avatar
                 sx={{
                   bgcolor: 'primary.main',
@@ -72,12 +102,24 @@ export default function Footer() {
               Nasze Gry
             </Typography>
             <Stack spacing={1}>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                Grand Strife Civil War
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                Strona na itch.io
-              </Typography>
+              {GAMES_LINKS.map((link) => (
+                <Typography
+                  key={link.label}
+                  component={link.external ? 'a' : Link}
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  variant="body2"
+                  sx={{
+                    color: 'text.secondary',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    '&:hover': { color: 'primary.main' },
+                  }}
+                >
+                  {link.label}
+                </Typography>
+              ))}
             </Stack>
           </Grid>
 
@@ -87,12 +129,24 @@ export default function Footer() {
               Studio & Press
             </Typography>
             <Stack spacing={1}>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                O Nas
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                Kontakt
-              </Typography>
+              {STUDIO_LINKS.map((link) => (
+                <Typography
+                  key={link.label}
+                  component={link.external ? 'a' : Link}
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  variant="body2"
+                  sx={{
+                    color: 'text.secondary',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    '&:hover': { color: 'primary.main' },
+                  }}
+                >
+                  {link.label}
+                </Typography>
+              ))}
             </Stack>
           </Grid>
 
@@ -102,23 +156,21 @@ export default function Footer() {
               Społeczność & Social Media
             </Typography>
             <Stack direction="row" spacing={1}>
-              <Tooltip title="GitHub">
-                <IconButton size="small" aria-label="GitHub" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                  <GitHubIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-
-              <Tooltip title="YouTube">
-                <IconButton size="small" aria-label="YouTube" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                  <YouTubeIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-
-              <Tooltip title="itch.io">
-                <IconButton size="small" aria-label="itch.io" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                  <ItchIoIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
+              {SOCIAL_LINKS.map((social) => (
+                <Tooltip key={social.title} title={social.title}>
+                  <IconButton
+                    component="a"
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="small"
+                    aria-label={social.title}
+                    sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+                  >
+                    {social.icon}
+                  </IconButton>
+                </Tooltip>
+              ))}
             </Stack>
           </Grid>
         </Grid>

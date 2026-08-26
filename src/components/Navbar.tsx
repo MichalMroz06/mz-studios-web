@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   AppBar,
   Toolbar,
@@ -31,12 +32,19 @@ import {
   Close as CloseIcon,
 } from '@mui/icons-material';
 
-const NAV_ITEMS = [
-  { label: 'Strona Główna', icon: <HomeIcon sx={{ fontSize: 22 }} />, active: true },
-  { label: 'Aktualności', icon: <NewsIcon sx={{ fontSize: 22 }} />, active: false },
-  { label: 'Nasze Gry', icon: <GamepadIcon sx={{ fontSize: 22 }} />, active: false },
-  { label: 'O Nas', icon: <InfoIcon sx={{ fontSize: 22 }} />, active: false },
-  { label: 'Kontakt', icon: <PhoneIcon sx={{ fontSize: 22 }} />, active: false },
+interface NavItem {
+  label: string;
+  icon: React.ReactNode;
+  active?: boolean;
+  href?: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { label: 'Strona Główna', icon: <HomeIcon sx={{ fontSize: 22 }} />, active: true, href: '/' },
+  { label: 'Aktualności', icon: <NewsIcon sx={{ fontSize: 22 }} />, active: false, href: '/news' },
+  { label: 'Nasze Gry', icon: <GamepadIcon sx={{ fontSize: 22 }} />, active: false, href: '/games' },
+  { label: 'O Nas', icon: <InfoIcon sx={{ fontSize: 22 }} />, active: false, href: '/about' },
+  { label: 'Kontakt', icon: <PhoneIcon sx={{ fontSize: 22 }} />, active: false, href: '/contact' },
 ];
 
 export default function Navbar() {
@@ -51,7 +59,14 @@ export default function Navbar() {
       <Container maxWidth="lg">
         <Toolbar sx={{ justifyContent: 'space-between', py: 1.5, px: { xs: 0, sm: 2 } }}>
           {/* Logo */}
-          <Stack direction="row" spacing={1.5} alignItems="center">
+          <Stack
+            component={Link}
+            href="/"
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+            sx={{ textDecoration: 'none', color: 'inherit' }}
+          >
             <Avatar
               sx={{
                 bgcolor: 'primary.main',
@@ -69,25 +84,34 @@ export default function Navbar() {
 
           {/* Desktop Navigation Links */}
           <Stack direction="row" spacing={3.5} alignItems="center" sx={{ display: { xs: 'none', md: 'flex' } }}>
-            {NAV_ITEMS.map((item) => (
-              <Stack
-                key={item.label}
-                direction="row"
-                spacing={0.8}
-                alignItems="center"
-                sx={{
-                  color: item.active ? 'text.primary' : 'text.secondary',
-                  cursor: 'pointer',
-                  transition: 'color 0.2s ease',
-                  '&:hover': { color: item.active ? 'primary.main' : 'text.primary' },
-                }}
-              >
-                {item.icon}
-                <Typography variant="body2" sx={{ fontWeight: item.active ? 600 : 500 }}>
-                  {item.label}
-                </Typography>
-              </Stack>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const navContent = (
+                <Stack
+                  direction="row"
+                  spacing={0.8}
+                  alignItems="center"
+                  sx={{
+                    color: item.active ? 'text.primary' : 'text.secondary',
+                    cursor: 'pointer',
+                    transition: 'color 0.2s ease',
+                    '&:hover': { color: item.active ? 'primary.main' : 'text.primary' },
+                  }}
+                >
+                  {item.icon}
+                  <Typography variant="body2" sx={{ fontWeight: item.active ? 600 : 500 }}>
+                    {item.label}
+                  </Typography>
+                </Stack>
+              );
+
+              return item.href ? (
+                <Box key={item.label} component={Link} href={item.href} sx={{ textDecoration: 'none' }}>
+                  {navContent}
+                </Box>
+              ) : (
+                <React.Fragment key={item.label}>{navContent}</React.Fragment>
+              );
+            })}
           </Stack>
 
           {/* Right Actions & Hamburger Button */}
@@ -175,6 +199,8 @@ export default function Navbar() {
               {NAV_ITEMS.map((item) => (
                 <ListItem key={item.label} disablePadding sx={{ mb: 0.8 }}>
                   <ListItemButton
+                    component={item.href ? Link : 'div'}
+                    href={item.href || '#'}
                     onClick={() => setMobileOpen(false)}
                     sx={{
                       borderRadius: 2,

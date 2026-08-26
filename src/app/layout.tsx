@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MZ Studios - Stonowany Motyw UI",
-  description: "MZ Studios Web Application with Material-UI Dark Theme",
+  title: "MZ Studios",
+  description: "MZ Studios Web Application for Game Dev Studio",
 };
 
 export default function RootLayout({
