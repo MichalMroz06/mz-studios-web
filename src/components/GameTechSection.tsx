@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import {
   Psychology as AiIcon,
-  Public as NetIcon,
+  Favorite as PassionIcon,
   SportsEsports as EngineIcon,
 } from '@mui/icons-material';
 
@@ -44,10 +44,10 @@ export default function GameTechSection() {
                 <EngineIcon sx={{ fontSize: 28 }} />
               </Avatar>
               <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, color: 'text.primary' }}>
-                Unreal Engine 5 & Unity 6
+                Godot Engine 4
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
-                Zwracamy szczególną uwagę na fotorealistyczne oświetlenie, płynną fizykę oraz nowoczesny rendering w czasie rzeczywistym.
+                Zwracamy szczególną uwagę na estetykę 2D, płynną fizykę oraz nowoczesny rendering w czasie rzeczywistym.
               </Typography>
             </CardContent>
           </Card>
@@ -69,10 +69,10 @@ export default function GameTechSection() {
                 <AiIcon sx={{ fontSize: 28 }} />
               </Avatar>
               <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, color: 'text.primary' }}>
-                Zaawansowane AI & Fizyka
+                Realistyczne AI
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
-                Projektujemy dynamiczne systemy zachowań przeciwników, zaawansowaną sztuczną inteligencję oraz precyzyjne mechaniki starć.
+                Projektujemy realistyczne systemy zachowań przeciwników, zaawansowaną sztuczną inteligencję oraz precyzyjne mechaniki walki.
               </Typography>
             </CardContent>
           </Card>
@@ -91,13 +91,13 @@ export default function GameTechSection() {
                   mb: 2.5,
                 }}
               >
-                <NetIcon sx={{ fontSize: 28 }} />
+                <PassionIcon sx={{ fontSize: 28 }} />
               </Avatar>
               <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, color: 'text.primary' }}>
-                Multiplayer & Cross-Play
+                Pasja i zaangażowanie
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>
-                Tworzymy serwery gier wieloosobowych, sprawny matchmaking oraz architekturę umożliwiającą grę międzystanowiskową (PC / Konsole).
+                Tworzymy gry z pasją, stawiając na zaangażowanie i doświadczenia graczy.
               </Typography>
             </CardContent>
           </Card>

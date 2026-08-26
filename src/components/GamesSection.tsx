@@ -16,41 +16,20 @@ import {
   SportsEsports as GameIcon,
   PlayArrow as PlayIcon,
   Schedule as ComingSoonIcon,
-  Star as ReleasedIcon,
 } from '@mui/icons-material';
 
 const GAMES = [
   {
-    title: 'Aetheria Chronicles',
-    genre: 'Sci-Fi Action RPG',
-    engine: 'Unreal Engine 5',
-    status: 'Premiera Q4 2026',
+    title: 'Grand Strife Civil War',
+    genre: '2d Survival RPG Adventure',
+    engine: 'Godot Engine 4.7.1',
+    status: 'In development',
     statusIcon: <ComingSoonIcon fontSize="small" />,
     statusColor: 'primary' as const,
-    platforms: ['Steam', 'PS5', 'Xbox Series X'],
-    description: 'Epidemia kosmicznej materii zmienia losy odległej kolonii. Odkrywaj otwarty świat, modyfikuj pancerz bojowy i stawiaj czoła nieznanym formom życia.',
-  },
-  {
-    title: 'Neon Overdrive',
-    genre: 'Cyberpunk Cyber-Racer',
-    engine: 'Unity 6',
-    status: 'Dostępne na Steam',
-    statusIcon: <ReleasedIcon fontSize="small" />,
-    statusColor: 'success' as const,
-    platforms: ['PC', 'Steam Deck'],
-    description: 'Dynamiczny wyścigowiec w klimacie synthwave. Przetestuj swoje refleksy przy prędkościach naddźwiękowych na neonowych torach futurystycznego metropolii.',
-  },
-  {
-    title: 'Shadows of Eldoria',
-    genre: 'Dark Fantasy Roguelike',
-    engine: 'Custom C++ Engine',
-    status: 'Zamknięta Beta',
-    statusIcon: <ComingSoonIcon fontSize="small" />,
-    statusColor: 'warning' as const,
-    platforms: ['PC / Steam'],
-    description: 'Mroczny roguelike z taktycznym systemem walki i losowo generowanymi podziemiami. Każde podejście wymaga nowej strategii i unikalnego buildu postaci.',
-  },
-];
+    platforms: ['PC / Itch.io'],
+    description: 'Dark fantasy w pixelartowym klimacie z elementami survivalu, rozwoju postaci według własnych upodobań. Możesz zostać kim chcesz w tym ciężkim świecie, gdzie czycha na ciebie wiele niebezpieczeństw oraz pułapek.',
+  }
+]
 
 export default function GamesSection() {
   return (
@@ -60,13 +39,19 @@ export default function GamesSection() {
           Nasze Gry i Projekty
         </Typography>
         <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 640, mx: 'auto' }}>
-          Poznaj tytuły stworzone przez nasze studio – od mrocznych gier roguelike po kinowe produkcje Sci-Fi.
+          Poznaj tytuły stworzone przez nasze studio – czyli RPG w klimacie fantasy tworzone z pasją.
         </Typography>
       </Box>
 
-      <Grid container spacing={3.5}>
+      <Grid container spacing={3.5} justifyContent="center" alignItems="stretch">
         {GAMES.map((game, index) => (
-          <Grid item xs={12} md={4} key={index}>
+          <Grid
+            item
+            xs={12}
+            sm={GAMES.length === 1 ? 8 : 6}
+            md={GAMES.length === 1 ? 6 : GAMES.length === 2 ? 5 : 4}
+            key={index}
+          >
             <Card
               sx={{
                 height: '100%',
@@ -111,7 +96,7 @@ export default function GamesSection() {
 
               <CardActions sx={{ px: 3, pb: 3, pt: 0 }}>
                 <Button fullWidth variant="outlined" color="primary" startIcon={<PlayIcon />} size="small">
-                  Karta Gry / Demo
+                  Dowiedz się więcej
                 </Button>
               </CardActions>
             </Card>
