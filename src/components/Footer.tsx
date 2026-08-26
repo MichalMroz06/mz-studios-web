@@ -10,14 +10,25 @@ import {
   Avatar,
   Divider,
   IconButton,
+  Tooltip,
+  SvgIcon,
 } from '@mui/material';
 import {
-  Palette as PaletteIcon,
+  SportsEsports as GamepadIcon,
   GitHub as GitHubIcon,
-  LinkedIn as LinkedInIcon,
-  Twitter as TwitterIcon,
-  Email as EmailIcon,
+  YouTube as YouTubeIcon,
 } from '@mui/icons-material';
+
+function ItchIoIcon(props: React.ComponentProps<typeof SvgIcon>) {
+  return (
+    <SvgIcon {...props} viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="M3.25 4.5A.75.75 0 0 0 2.5 5.25v2.338c0 .285.16.543.414.67l2.586 1.293V18a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V9.551l2.586-1.293a.75.75 0 0 0 .414-.67V5.25a.75.75 0 0 0-.75-.75h-17.5zM8 12.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm8 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+      />
+    </SvgIcon>
+  );
+}
 
 export default function Footer() {
   return (
@@ -44,29 +55,38 @@ export default function Footer() {
                   height: 36,
                 }}
               >
-                <PaletteIcon sx={{ fontSize: 20 }} />
+                <GamepadIcon sx={{ fontSize: 20 }} />
               </Avatar>
               <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary' }}>
                 MZ <Box component="span" sx={{ color: 'primary.main' }}>Studios</Box>
               </Typography>
             </Stack>
             <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6, maxWidth: 320 }}>
-              Nowoczesne aplikacje internetowe i systemy designu stworzone w oparciu o Next.js i Material-UI.
+              Niezależne studio game dev tworzące wciągające, klimatyczne gry wideo na PC.
             </Typography>
           </Grid>
 
           {/* Quick Links */}
           <Grid item xs={6} sm={4} md={2.5}>
             <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 2 }}>
-              Nawigacja
+              Nasze Gry
             </Typography>
             <Stack spacing={1}>
               <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                Strona Główna
+                Grand Strife Civil War
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                Komponenty UI
+                Strona na itch.io
               </Typography>
+            </Stack>
+          </Grid>
+
+          {/* Studio Links */}
+          <Grid item xs={6} sm={4} md={2.5}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 2 }}>
+              Studio & Press
+            </Typography>
+            <Stack spacing={1}>
               <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
                 O Nas
               </Typography>
@@ -76,57 +96,38 @@ export default function Footer() {
             </Stack>
           </Grid>
 
-          {/* Resources */}
-          <Grid item xs={6} sm={4} md={2.5}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 2 }}>
-              Zasoby
-            </Typography>
-            <Stack spacing={1}>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                Dokumentacja
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                System Designu
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                GitHub Repository
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-                Changelog
-              </Typography>
-            </Stack>
-          </Grid>
-
           {/* Social Links */}
           <Grid item xs={12} sm={4} md={3}>
             <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary', mb: 2 }}>
-              Dołącz do nas
+              Społeczność & Social Media
             </Typography>
             <Stack direction="row" spacing={1}>
-              <IconButton size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                <GitHubIcon fontSize="small" />
-              </IconButton>
-              <IconButton size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                <LinkedInIcon fontSize="small" />
-              </IconButton>
-              <IconButton size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                <TwitterIcon fontSize="small" />
-              </IconButton>
-              <IconButton size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                <EmailIcon fontSize="small" />
-              </IconButton>
+              <Tooltip title="GitHub">
+                <IconButton size="small" aria-label="GitHub" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+                  <GitHubIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="YouTube">
+                <IconButton size="small" aria-label="YouTube" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+                  <YouTubeIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="itch.io">
+                <IconButton size="small" aria-label="itch.io" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+                  <ItchIoIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </Stack>
           </Grid>
         </Grid>
 
         <Divider sx={{ my: 3 }} />
 
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+        <Box sx={{ textAlign: 'center' }}>
           <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-            MZ Studios © {new Date().getFullYear()} • Wszelkie prawa zastrzeżone.
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-            Stworzono z Next.js 15 & Material-UI
+            MZ Studios © {new Date().getFullYear()} • Wszystkie prawa zastrzeżone.
           </Typography>
         </Box>
       </Container>

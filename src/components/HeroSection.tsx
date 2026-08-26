@@ -9,15 +9,15 @@ import {
   Stack,
 } from '@mui/material';
 import {
-  RocketLaunch as RocketIcon,
-  Code as CodeIcon,
+  SportsEsports as GamepadIcon,
+  FolderZip as PressIcon,
 } from '@mui/icons-material';
 
 export default function HeroSection() {
   return (
-    <Box sx={{ textAlign: 'center', pt: 4, pb: 8, px: { xs: 2, md: 8 } }}>
+    <Box sx={{ textAlign: 'center', pt: { xs: 4, md: 6 }, pb: { xs: 6, md: 8 }, px: { xs: 2, md: 8 } }}>
       <Chip
-        label="Design System & MUI Theme Foundation"
+        label="MZ Games • Independent Game Studio"
         size="small"
         sx={{
           mb: 3,
@@ -35,7 +35,7 @@ export default function HeroSection() {
         component="h1"
         sx={{
           fontWeight: 800,
-          fontSize: { xs: '2.25rem', sm: '3.5rem', md: '4rem' },
+          fontSize: { xs: '2.25rem', sm: '3.5rem', md: '3.75rem' },
           lineHeight: 1.15,
           mb: 2.5,
           background: 'linear-gradient(135deg, #FFFFFF 0%, #B0C4DE 50%, #5A82AD 100%)',
@@ -43,7 +43,7 @@ export default function HeroSection() {
           WebkitTextFillColor: 'transparent',
         }}
       >
-        Stonowany Ciemny Motyw
+        Tworzymy Niezapomniane Światy i Gry Wideo
       </Typography>
 
       <Typography
@@ -51,15 +51,15 @@ export default function HeroSection() {
         sx={{
           color: 'text.secondary',
           fontWeight: 400,
-          maxWidth: '680px',
+          maxWidth: '720px',
           mx: 'auto',
           mb: 4,
           fontSize: { xs: '1rem', sm: '1.15rem' },
           lineHeight: 1.6,
         }}
       >
-        Spójny, stonowany i przyjemny dla oczu motyw Material-UI w odcieniach przygaszonego stalowego błękitem.
-        Zmniejszony jaskrawy kontrast i wyważone mikro-interakcje.
+        Niezależne studio game dev specjalizujące się w unikalnych grach PC i konsolowych.
+        Łączymy pasję do innowacyjnych mechanik rozgrywki z głęboką narracją i klimatyczną oprawą 3D.
       </Typography>
 
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
@@ -67,19 +67,19 @@ export default function HeroSection() {
           variant="contained"
           color="primary"
           size="large"
-          startIcon={<RocketIcon />}
+          startIcon={<GamepadIcon />}
           sx={{ px: 3.5, py: 1.25, fontSize: '1rem' }}
         >
-          Przeglądaj Komponenty
+          Zobacz Nasze Gry
         </Button>
         <Button
           variant="outlined"
           color="primary"
           size="large"
-          startIcon={<CodeIcon />}
+          startIcon={<PressIcon />}
           sx={{ px: 3.5, py: 1.25, fontSize: '1rem' }}
         >
-          Dokumentacja Stylów
+          Pobierz Press Kit
         </Button>
       </Stack>
     </Box>
