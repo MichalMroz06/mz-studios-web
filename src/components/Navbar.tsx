@@ -138,6 +138,8 @@ export default function Navbar() {
             </Tooltip>
 
             <Button
+              component={Link}
+              href="/login"
               variant="contained"
               color="primary"
               size="small"
@@ -226,6 +228,8 @@ export default function Navbar() {
 
             <Box sx={{ pt: 1.5 }}>
               <Button
+                component={Link}
+                href="/login"
                 fullWidth
                 variant="contained"
                 color="primary"

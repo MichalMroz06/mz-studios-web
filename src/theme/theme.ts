@@ -25,6 +25,12 @@ const baseTheme = createTheme({
       disabled: '#6b7280',
     },
     divider: 'rgba(255, 255, 255, 0.08)',
+    error: {
+      main: '#e06c75', // Stonowany, miękki koralowy róż (nie razi w oczy w dark mode)
+      light: '#ea8a93',
+      dark: '#b0525b',
+      contrastText: '#ffffff',
+    },
     action: {
       active: '#9ca3af',
       hover: 'rgba(90, 130, 173, 0.08)',
@@ -97,6 +103,12 @@ const baseTheme = createTheme({
             },
           },
         },
+        'input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active': {
+          WebkitBoxShadow: '0 0 0 1000px #111827 inset !important',
+          WebkitTextFillColor: '#f9fafb !important',
+          caretColor: '#f9fafb',
+          transition: 'background-color 50000s ease-in-out 0s',
+        },
       },
     },
     MuiButton: {
@@ -164,6 +176,31 @@ const baseTheme = createTheme({
             borderColor: '#5a82ad',
             borderWidth: '1px',
             boxShadow: '0 0 0 3px rgba(90, 130, 173, 0.2)',
+          },
+          '&.Mui-error .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'rgba(224, 108, 117, 0.6)',
+          },
+          '&.Mui-error.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#e06c75',
+            boxShadow: '0 0 0 3px rgba(224, 108, 117, 0.18)',
+          },
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px #111827 inset !important',
+            WebkitTextFillColor: '#f9fafb !important',
+            caretColor: '#f9fafb',
+            borderRadius: '0px',
+          },
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginTop: '6px',
+          fontSize: '0.82rem',
+          fontWeight: 500,
+          '&.Mui-error': {
+            color: '#e06c75',
           },
         },
       },
