@@ -33,6 +33,8 @@ export default function LoginForm() {
   const [rememberMe, setRememberMe] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
   const [touchedEmail, setTouchedEmail] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState('');
+  const [touchedPassword, setTouchedPassword] = React.useState(false);
 
   const validateEmail = (val: string) => {
     if (!val.trim()) {
@@ -41,6 +43,16 @@ export default function LoginForm() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(val)) {
       return 'Wprowadź poprawny adres e-mail (np. nazwa@domena.pl)';
+    }
+    return '';
+  };
+
+  const validatePassword = (val: string) => {
+    if (!val) {
+      return 'Hasło jest wymagane';
+    }
+    if (val.length < 8) {
+      return 'Hasło musi składać się z co najmniej 8 znaków';
     }
     return '';
   };
@@ -58,6 +70,19 @@ export default function LoginForm() {
     setEmailError(validateEmail(email));
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    if (touchedPassword) {
+      setPasswordError(validatePassword(value));
+    }
+  };
+
+  const handlePasswordBlur = () => {
+    setTouchedPassword(true);
+    setPasswordError(validatePassword(password));
+  };
+
   const handleClickShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
@@ -65,9 +90,12 @@ export default function LoginForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setTouchedEmail(true);
-    const err = validateEmail(email);
-    setEmailError(err);
-    if (err) {
+    setTouchedPassword(true);
+    const emailErr = validateEmail(email);
+    const passErr = validatePassword(password);
+    setEmailError(emailErr);
+    setPasswordError(passErr);
+    if (emailErr || passErr) {
       return;
     }
   };
@@ -147,13 +175,16 @@ export default function LoginForm() {
                 variant="outlined"
                 autoComplete="current-password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
+                onBlur={handlePasswordBlur}
+                error={Boolean(passwordError)}
+                helperText={passwordError}
                 placeholder="••••••••"
                 slotProps={{
                   input: {
                     startAdornment: (
                       <InputAdornment position="start">
-                        <LockIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
+                        <LockIcon sx={{ color: passwordError ? 'error.main' : 'text.secondary', fontSize: 20 }} />
                       </InputAdornment>
                     ),
                     endAdornment: (
