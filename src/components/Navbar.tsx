@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   AppBar,
   Toolbar,
@@ -35,19 +36,19 @@ import {
 interface NavItem {
   label: string;
   icon: React.ReactNode;
-  active?: boolean;
-  href?: string;
+  href: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Strona Główna', icon: <HomeIcon sx={{ fontSize: 22 }} />, active: true, href: '/' },
-  { label: 'Aktualności', icon: <NewsIcon sx={{ fontSize: 22 }} />, active: false, href: '/news' },
-  { label: 'Nasze Gry', icon: <GamepadIcon sx={{ fontSize: 22 }} />, active: false, href: '/games' },
-  { label: 'O Nas', icon: <InfoIcon sx={{ fontSize: 22 }} />, active: false, href: '/about' },
-  { label: 'Kontakt', icon: <PhoneIcon sx={{ fontSize: 22 }} />, active: false, href: '/contact' },
+  { label: 'Strona Główna', icon: <HomeIcon sx={{ fontSize: 22 }} />, href: '/' },
+  { label: 'Aktualności', icon: <NewsIcon sx={{ fontSize: 22 }} />, href: '/news' },
+  { label: 'Nasze Gry', icon: <GamepadIcon sx={{ fontSize: 22 }} />, href: '/games' },
+  { label: 'O Nas', icon: <InfoIcon sx={{ fontSize: 22 }} />, href: '/about' },
+  { label: 'Kontakt', icon: <PhoneIcon sx={{ fontSize: 22 }} />, href: '/contact' },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -85,31 +86,30 @@ export default function Navbar() {
           {/* Desktop Navigation Links */}
           <Stack direction="row" spacing={3.5} alignItems="center" sx={{ display: { xs: 'none', md: 'flex' } }}>
             {NAV_ITEMS.map((item) => {
+              const isActive = item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href);
               const navContent = (
                 <Stack
                   direction="row"
                   spacing={0.8}
                   alignItems="center"
                   sx={{
-                    color: item.active ? 'text.primary' : 'text.secondary',
+                    color: isActive ? 'text.primary' : 'text.secondary',
                     cursor: 'pointer',
                     transition: 'color 0.2s ease',
-                    '&:hover': { color: item.active ? 'primary.main' : 'text.primary' },
+                    '&:hover': { color: isActive ? 'primary.main' : 'text.primary' },
                   }}
                 >
                   {item.icon}
-                  <Typography variant="body2" sx={{ fontWeight: item.active ? 600 : 500 }}>
+                  <Typography variant="body2" sx={{ fontWeight: isActive ? 600 : 500 }}>
                     {item.label}
                   </Typography>
                 </Stack>
               );
 
-              return item.href ? (
+              return (
                 <Box key={item.label} component={Link} href={item.href} sx={{ textDecoration: 'none' }}>
                   {navContent}
                 </Box>
-              ) : (
-                <React.Fragment key={item.label}>{navContent}</React.Fragment>
               );
             })}
           </Stack>
@@ -196,29 +196,32 @@ export default function Navbar() {
         >
           <Container maxWidth="lg" disableGutters>
             <List disablePadding>
-              {NAV_ITEMS.map((item) => (
-                <ListItem key={item.label} disablePadding sx={{ mb: 0.8 }}>
-                  <ListItemButton
-                    component={item.href ? Link : 'div'}
-                    href={item.href || '#'}
-                    onClick={() => setMobileOpen(false)}
-                    sx={{
-                      borderRadius: 2,
-                      color: item.active ? 'primary.main' : 'text.secondary',
-                      bgcolor: item.active ? 'rgba(90, 130, 173, 0.12)' : 'transparent',
-                      '&:hover': { bgcolor: 'rgba(90, 130, 173, 0.15)', color: 'text.primary' },
-                    }}
-                  >
-                    <ListItemIcon sx={{ color: 'inherit', minWidth: 38 }}>
-                      {item.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={item.label}
-                      primaryTypographyProps={{ fontWeight: item.active ? 700 : 500, fontSize: '0.95rem' }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                const isActive = item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href);
+                return (
+                  <ListItem key={item.label} disablePadding sx={{ mb: 0.8 }}>
+                    <ListItemButton
+                      component={Link}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      sx={{
+                        borderRadius: 2,
+                        color: isActive ? 'primary.main' : 'text.secondary',
+                        bgcolor: isActive ? 'rgba(90, 130, 173, 0.12)' : 'transparent',
+                        '&:hover': { bgcolor: 'rgba(90, 130, 173, 0.15)', color: 'text.primary' },
+                      }}
+                    >
+                      <ListItemIcon sx={{ color: 'inherit', minWidth: 38 }}>
+                        {item.icon}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={item.label}
+                        primaryTypographyProps={{ fontWeight: isActive ? 700 : 500, fontSize: '0.95rem' }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
             </List>
 
             <Box sx={{ pt: 1.5 }}>
