@@ -1,11 +1,11 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   Box,
   Typography,
   Button,
-  Chip,
   Stack,
 } from '@mui/material';
 import {
@@ -50,6 +50,8 @@ export default function HeroSection() {
 
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
         <Button
+          component={Link}
+          href="/games"
           variant="contained"
           color="primary"
           size="large"
@@ -59,6 +61,8 @@ export default function HeroSection() {
           Zobacz Nasze Gry
         </Button>
         <Button
+          component={Link}
+          href="/about"
           variant="outlined"
           color="primary"
           size="large"

@@ -1,5 +1,3 @@
-'use client';
-
 import Container from '@mui/material/Container';
 import AboutHero from '@/components/about/AboutHero';
 import AboutMetrics from '@/components/about/AboutMetrics';
