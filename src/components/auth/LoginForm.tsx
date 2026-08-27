@@ -14,11 +14,9 @@ import {
   InputAdornment,
   IconButton,
   Stack,
-  Avatar,
   Divider,
 } from '@mui/material';
 import {
-  SportsEsports as GamepadIcon,
   Email as EmailIcon,
   Lock as LockIcon,
   Visibility,
@@ -269,8 +267,7 @@ export default function LoginForm() {
               Nie posiadasz jeszcze konta?{' '}
               <Typography
                 component={Link}
-                href="#"
-                onClick={(e) => e.preventDefault()}
+                href="/register"
                 variant="body2"
                 sx={{
                   color: 'primary.main',
