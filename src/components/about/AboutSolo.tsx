@@ -6,7 +6,6 @@ import {
   Person as PersonIcon,
   Code as CodeIcon,
   SportsEsports as GamepadIcon,
-  Terminal as TerminalIcon,
   AutoAwesome as QualityIcon,
 } from '@mui/icons-material';
 
