@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   Paper,
   Typography,
@@ -9,7 +10,7 @@ import {
 } from '@mui/material';
 import {
   Send as SendIcon,
-  Groups as JobsIcon,
+  Info as InfoIcon,
 } from '@mui/icons-material';
 
 export default function ContactBanner() {
@@ -33,6 +34,8 @@ export default function ContactBanner() {
       </Typography>
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
         <Button
+          component={Link}
+          href="/contact"
           variant="contained"
           color="primary"
           size="large"
@@ -40,6 +43,17 @@ export default function ContactBanner() {
           sx={{ px: 4, py: 1.2 }}
         >
           Napisz do nas za pośrednictwem formularza!
+        </Button>
+        <Button
+          component={Link}
+          href="/about"
+          variant="outlined"
+          color="primary"
+          size="large"
+          startIcon={<InfoIcon />}
+          sx={{ px: 4, py: 1.2 }}
+        >
+          Dowiedz się więcej O Nas
         </Button>
       </Stack>
     </Paper>
