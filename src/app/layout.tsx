@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CookieConsentBanner from "@/components/CookieConsentBanner";
+import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,11 +39,14 @@ export default function RootLayout({
         style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
       >
         <ThemeRegistry>
-          <Navbar />
-          <main style={{ flex: 1 }}>
-            {children}
-          </main>
-          <Footer />
+          <AuthProvider>
+            <Navbar />
+            <main style={{ flex: 1 }}>
+              {children}
+            </main>
+            <Footer />
+            <CookieConsentBanner />
+          </AuthProvider>
         </ThemeRegistry>
       </body>
     </html>

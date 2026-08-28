@@ -22,9 +22,11 @@ import {
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
+import { useAuth } from '@/context/AuthContext';
 
 export default function LoginFormFields() {
   const router = useRouter();
+  const { setUser } = useAuth();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [identifier, setIdentifier] = React.useState('');
@@ -113,6 +115,10 @@ export default function LoginFormFields() {
       if (!response.ok) {
         setServerError(data.error ?? 'Wystąpił błąd podczas logowania.');
         return;
+      }
+
+      if (data.user) {
+        setUser(data.user);
       }
 
       router.push('/');
