@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db } from '@/lib/db/db';
 import * as argon2 from 'argon2';
 import { SignJWT } from 'jose';
 

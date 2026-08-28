@@ -310,7 +310,7 @@ export default function Navbar() {
 
                   <Divider sx={{ my: 0.8, borderColor: 'rgba(255, 255, 255, 0.08)' }} />
 
-                  <MenuItem onClick={handleMenuClose}>
+                  <MenuItem onClick={handleMenuClose} component={Link} href='/profile'>
                     <ListItemIcon sx={{ color: 'primary.main', minWidth: 36 }}>
                       <PersonIcon sx={{ fontSize: 22 }} />
                     </ListItemIcon>
