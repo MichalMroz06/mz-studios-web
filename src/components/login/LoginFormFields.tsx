@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Box,
   TextField,
@@ -12,6 +13,8 @@ import {
   IconButton,
   Stack,
   Typography,
+  Alert,
+  CircularProgress,
 } from '@mui/material';
 import {
   Email as EmailIcon,
@@ -21,22 +24,22 @@ import {
 } from '@mui/icons-material';
 
 export default function LoginFormFields() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = React.useState(false);
-  const [email, setEmail] = React.useState('');
+  const [identifier, setIdentifier] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [rememberMe, setRememberMe] = React.useState(false);
-  const [emailError, setEmailError] = React.useState('');
-  const [touchedEmail, setTouchedEmail] = React.useState(false);
+  const [identifierError, setIdentifierError] = React.useState('');
+  const [touchedIdentifier, setTouchedIdentifier] = React.useState(false);
   const [passwordError, setPasswordError] = React.useState('');
   const [touchedPassword, setTouchedPassword] = React.useState(false);
+  const [serverError, setServerError] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const validateEmail = (val: string) => {
+  const validateIdentifier = (val: string) => {
     if (!val.trim()) {
-      return 'Adres e-mail jest wymagany';
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(val)) {
-      return 'Wprowadź poprawny adres e-mail (np. nazwa@domena.pl)';
+      return 'Adres e-mail lub login jest wymagany';
     }
     return '';
   };
@@ -51,17 +54,17 @@ export default function LoginFormFields() {
     return '';
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIdentifierChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setEmail(value);
-    if (touchedEmail) {
-      setEmailError(validateEmail(value));
+    setIdentifier(value);
+    if (touchedIdentifier) {
+      setIdentifierError(validateIdentifier(value));
     }
   };
 
-  const handleEmailBlur = () => {
-    setTouchedEmail(true);
-    setEmailError(validateEmail(email));
+  const handleIdentifierBlur = () => {
+    setTouchedIdentifier(true);
+    setIdentifierError(validateIdentifier(identifier));
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,40 +84,83 @@ export default function LoginFormFields() {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTouchedEmail(true);
+    setServerError('');
+    setTouchedIdentifier(true);
     setTouchedPassword(true);
-    const emailErr = validateEmail(email);
+
+    const idErr = validateIdentifier(identifier);
     const passErr = validatePassword(password);
-    setEmailError(emailErr);
+    setIdentifierError(idErr);
     setPasswordError(passErr);
-    if (emailErr || passErr) {
+
+    if (idErr || passErr) {
       return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier: identifier.trim(), password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setServerError(data.error ?? 'Wystąpił błąd podczas logowania.');
+        return;
+      }
+
+      router.push('/');
+      router.refresh();
+    } catch {
+      setServerError('Błąd połączenia z serwerem. Sprawdź połączenie i spróbuj ponownie.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
       <Stack spacing={2.5}>
+        {/* Server-side error alert */}
+        {serverError && (
+          <Alert
+            severity="error"
+            sx={{
+              bgcolor: 'rgba(224, 108, 117, 0.1)',
+              color: '#e06c75',
+              border: '1px solid rgba(224, 108, 117, 0.3)',
+              '& .MuiAlert-icon': { color: '#e06c75' },
+            }}
+          >
+            {serverError}
+          </Alert>
+        )}
+
         <TextField
           fullWidth
-          id="email"
-          name="email"
+          id="identifier"
+          name="identifier"
           label="Adres e-mail lub login"
           variant="outlined"
           autoComplete="username"
-          value={email}
-          onChange={handleEmailChange}
-          onBlur={handleEmailBlur}
-          error={Boolean(emailError)}
-          helperText={emailError}
-          placeholder="twoj.email@example.com"
+          value={identifier}
+          onChange={handleIdentifierChange}
+          onBlur={handleIdentifierBlur}
+          error={Boolean(identifierError)}
+          helperText={identifierError}
+          placeholder="twoj.email@example.com lub login"
+          disabled={isLoading}
           slotProps={{
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon sx={{ color: emailError ? 'error.main' : 'text.secondary', fontSize: 20 }} />
+                  <EmailIcon sx={{ color: identifierError ? 'error.main' : 'text.secondary', fontSize: 20 }} />
                 </InputAdornment>
               ),
             },
@@ -135,6 +181,7 @@ export default function LoginFormFields() {
           error={Boolean(passwordError)}
           helperText={passwordError}
           placeholder="••••••••"
+          disabled={isLoading}
           slotProps={{
             input: {
               startAdornment: (
@@ -150,6 +197,7 @@ export default function LoginFormFields() {
                     edge="end"
                     size="small"
                     sx={{ color: 'text.secondary' }}
+                    disabled={isLoading}
                   >
                     {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
                   </IconButton>
@@ -171,6 +219,7 @@ export default function LoginFormFields() {
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
                 size="small"
+                disabled={isLoading}
                 sx={{
                   color: 'text.secondary',
                   '&.Mui-checked': { color: 'primary.main' },
@@ -204,6 +253,7 @@ export default function LoginFormFields() {
           fullWidth
           variant="contained"
           size="large"
+          disabled={isLoading}
           sx={{
             py: 1.4,
             fontSize: '1rem',
@@ -211,7 +261,11 @@ export default function LoginFormFields() {
             mt: 1,
           }}
         >
-          Zaloguj się
+          {isLoading ? (
+            <CircularProgress size={22} sx={{ color: 'inherit' }} />
+          ) : (
+            'Zaloguj się'
+          )}
         </Button>
       </Stack>
     </Box>

@@ -1,0 +1,12 @@
+// This is your Prisma schema configuration file.
+// It configures generator and datasource for multi-file schema setup.
+// Do NOT run "prisma db push" - the schema is managed by Flyway migrations.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["app"]
+}

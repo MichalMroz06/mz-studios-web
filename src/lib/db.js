@@ -1,0 +1,19 @@
+"use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.db = void 0;
+var client_1 = require("@prisma/client");
+var adapter_pg_1 = require("@prisma/adapter-pg");
+var pg_1 = require("pg");
+function createPrismaClient() {
+    var connectionString = process.env.DATABASE_URL ||
+        'postgresql://postgres:postgres@localhost:5432/mz_studios_db_dev';
+    var pool = new pg_1.Pool({ connectionString: connectionString });
+    var adapter = new adapter_pg_1.PrismaPg(pool);
+    return new client_1.PrismaClient({ adapter: adapter });
+}
+var db = (_a = global.prisma) !== null && _a !== void 0 ? _a : createPrismaClient();
+exports.db = db;
+if (process.env.NODE_ENV !== 'production') {
+    global.prisma = db;
+}
